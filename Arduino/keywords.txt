@@ -1,0 +1,29 @@
+#########################################
+# Syntax Coloring Map For Arduino-ADG2128
+#########################################
+
+#########################################
+# Datatypes (KEYWORD1)
+#########################################
+
+ADG2128        KEYWORD1
+ADG2128_ERROR  KEYWORD1
+
+#########################################
+# Methods and Functions (KEYWORD2)
+#########################################
+
+printDebug         KEYWORD2
+init               KEYWORD2
+reset              KEYWORD2
+setRoute           KEYWORD2
+changeRoute        KEYWORD2
+unsetRoute         KEYWORD2
+preserveOnDestroy  KEYWORD2
+
+
+#########################################
+# Constants (LITERAL1)
+#########################################
+
+ADG2128_DEFAULT_I2C_ADDR  LITERAL1
