@@ -83,7 +83,7 @@ void setup() {
   printHelp();
   disp_update_last = millis();
   disp_update_next = disp_update_last + 1000;
-  adc0.init();
+  adc0.init(&SPI);
   adc0.setScanChannels(5, MCP356xChannel::DIFF_A, MCP356xChannel::DIFF_B, MCP356xChannel::DIFF_C, MCP356xChannel::DIFF_D, MCP356xChannel::TEMP);
 }
 
