@@ -1,29 +1,66 @@
 #########################################
-# Syntax Coloring Map For Arduino-ADG2128
+# Syntax Coloring Map For Arduino-MCP356x
 #########################################
 
 #########################################
 # Datatypes (KEYWORD1)
 #########################################
 
-ADG2128        KEYWORD1
-ADG2128_ERROR  KEYWORD1
+MCP356x                   KEYWORD1
+MCP356xRegister           KEYWORD1
+MCP356xChannel            KEYWORD1
+MCP356xMode               KEYWORD1
+MCP356xGain               KEYWORD1
+MCP356xBiasBoost          KEYWORD1
+MCP356xBiasCurrent        KEYWORD1
+MCP356xOversamplingRatio  KEYWORD1
+MCP356xAMCLKPrescaler     KEYWORD1
 
 #########################################
 # Methods and Functions (KEYWORD2)
 #########################################
 
-printDebug         KEYWORD2
-init               KEYWORD2
-reset              KEYWORD2
-setRoute           KEYWORD2
-changeRoute        KEYWORD2
-unsetRoute         KEYWORD2
-preserveOnDestroy  KEYWORD2
+init                    KEYWORD2
+reset                   KEYWORD2
+read                    KEYWORD2
+valueAsVoltage          KEYWORD2
+value                   KEYWORD2
+scanComplete            KEYWORD2
+lastRead                KEYWORD2
+readCount               KEYWORD2
+resetReadCount          KEYWORD2
+setOption               KEYWORD2
+setOffsetCalibration    KEYWORD2
+setGainCalibration      KEYWORD2
+setGain                 KEYWORD2
+setBiasCurrent          KEYWORD2
+setAMCLKPrescaler       KEYWORD2
+setOversamplingRatio    KEYWORD2
+getOversamplingRatio    KEYWORD2
+getGain                 KEYWORD2
+setScanChannels         KEYWORD2
+setReferenceRange       KEYWORD2
+refresh                 KEYWORD2
+getIRQPin               KEYWORD2
+adcFound                KEYWORD2
+adcConfigured           KEYWORD2
+adcCalibrated           KEYWORD2
+isrFired                KEYWORD2
+discardUnsettledSamples KEYWORD2
+getTemperature          KEYWORD2
+getSampleRate           KEYWORD2
+getMCLKFrequency        KEYWORD2
+getSettlingTime         KEYWORD2
+getCircuitSettleTime    KEYWORD2
+setCircuitSettleTime    KEYWORD2
+printPins               KEYWORD2
+printRegs               KEYWORD2
+printTimings            KEYWORD2
+printData               KEYWORD2
+printChannelValues      KEYWORD2
+printChannel            KEYWORD2
 
 
 #########################################
 # Constants (LITERAL1)
 #########################################
-
-ADG2128_DEFAULT_I2C_ADDR  LITERAL1

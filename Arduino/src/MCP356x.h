@@ -1,4 +1,3 @@
-/* Test driver for MCP356x */
 #ifndef __MCP356x_H__
 #define __MCP356x_H__
 
@@ -8,9 +7,7 @@
 #include <SPI.h>
 #include "StringBuilder.h"
 
-/*
-* In this case, these enum values translate directly to register addresses.
-*/
+/* In this case, these enum values translate directly to register addresses. */
 enum class MCP356xRegister : uint8_t {
   ADCDATA   = 0x00,   // (it's complicated)  R
   CONFIG0   = 0x01,   // 8-bit               RW
@@ -30,9 +27,7 @@ enum class MCP356xRegister : uint8_t {
   CRCCFG    = 0x0F    // 16-bit              R
 };
 
-/*
-* The ADC is divided into 16 logical channels.
-*/
+/* The ADC is divided into 16 logical channels. */
 enum class MCP356xChannel : uint8_t {
   SE_0   = 0x00,
   SE_1   = 0x01,
@@ -52,19 +47,14 @@ enum class MCP356xChannel : uint8_t {
   OFFSET = 0x0F
 };
 
-/*
-* Conversion modes...
-*/
+/* Conversion modes */
 enum class MCP356xMode : uint8_t {
   ONESHOT_SHUTDOWN = 0,
   ONESHOT_STANDBY  = 2,
   CONTINUOUS       = 3
 };
 
-/*
-* ADC gain ratio.
-* Enum values convert directly into register values.
-*/
+/* ADC gain ratio. Enum values convert directly into register values. */
 enum class MCP356xGain : uint8_t {
   GAIN_ONETHIRD = 0,
   GAIN_1        = 1,
@@ -76,10 +66,7 @@ enum class MCP356xGain : uint8_t {
   GAIN_64       = 7
 };
 
-/*
-* Bias current boost ratio.
-* Enum values convert directly into register values.
-*/
+/* Bias current. Enum values convert directly into register values. */
 enum class MCP356xBiasCurrent : uint8_t {
   HALF      = 0,
   TWOTHIRDS = 1,
@@ -87,9 +74,15 @@ enum class MCP356xBiasCurrent : uint8_t {
   DOUBLE    = 3
 };
 
-/*
-* Enum values convert directly into register values.
-*/
+/* Enum value converts directly into register value.*/
+enum class MCP356xBiasBoost : uint8_t {
+  HALF      = 0,
+  TWOTHIRDS = 1,
+  ONE       = 2,
+  DOUBLE    = 3
+};
+
+/* Enum values convert directly into register values. */
 enum class MCP356xOversamplingRatio : uint8_t {
   OSR_32    = 0x00,
   OSR_64    = 0x01,
@@ -109,9 +102,7 @@ enum class MCP356xOversamplingRatio : uint8_t {
   OSR_98304 = 0x0F
 };
 
-/*
-* Clock prescaler options.
-*/
+/* Clock prescaler options. */
 enum class MCP356xAMCLKPrescaler : uint8_t {
   OVER_1 = 0,
   OVER_2 = 1,
@@ -140,12 +131,19 @@ enum class MCP356xAMCLKPrescaler : uint8_t {
 #define MCP356X_FLAG_SAMPLED_OFFSET   0x00000400  // This calibration-related channel was sampled.
 #define MCP356X_FLAG_3RD_ORDER_TEMP   0x00000800  // Spend CPU to make temperature conversion more accurate?
 #define MCP356X_FLAG_GENERATE_MCLK    0x00001000  // MCU is to generate the clock.
+#define MCP356X_FLAG_HAS_INTRNL_VREF  0x00004000  // This part was found to support an internal Vref.
+#define MCP356X_FLAG_USE_INTRNL_VREF  0x00008000  // Internal Vref should be enabled.
 
-#define MCP356X_FLAG_RESET_MASK       0x00001853  // Bits to preserve through reset.
-#define MCP356X_FLAG_ALL_CAL_MASK     0x00000700  // Bits indicating calibration steps.
+// Bits to preserve through reset.
+#define MCP356X_FLAG_RESET_MASK  (MCP356X_FLAG_DEVICE_PRESENT | MCP356X_FLAG_PINS_CONFIGURED | \
+                                  MCP356X_FLAG_VREF_DECLARED | MCP356X_FLAG_USE_INTERNAL_CLK | \
+                                  MCP356X_FLAG_3RD_ORDER_TEMP | MCP356X_FLAG_GENERATE_MCLK | \
+                                  MCP356X_FLAG_HAS_INTRNL_VREF | MCP356X_FLAG_USE_INTRNL_VREF)
 
-
-
+// Bits indicating calibration steps.
+#define MCP356X_FLAG_ALL_CAL_MASK  (MCP356X_FLAG_SAMPLED_AVDD | \
+                                    MCP356X_FLAG_SAMPLED_VCM | \
+                                    MCP356X_FLAG_SAMPLED_OFFSET)
 
 class MCP356x {
   public:
@@ -185,6 +183,9 @@ class MCP356x {
     inline bool    adcFound() {       return _mcp356x_flag(MCP356X_FLAG_DEVICE_PRESENT);  };
     inline bool    adcConfigured() {  return _mcp356x_flag(MCP356X_FLAG_INITIALIZED);     };
     inline bool    adcCalibrated() {  return _mcp356x_flag(MCP356X_FLAG_CALIBRATED);      };
+    inline bool    hasInternalVref() {  return _mcp356x_flag(MCP356X_FLAG_HAS_INTRNL_VREF);   };
+    bool usingInternalVref();
+    int8_t useInternalVref(bool);
 
     bool isrFired() {    return isr_fired;   };
 
